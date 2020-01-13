@@ -1,0 +1,108 @@
+{
+  "asset": {
+    "version": "0.0",
+    "tilesetVersion": "1.0.0-obj23dtiles"
+  },
+  "geometricError": 500,
+  "root": {
+    "boundingVolume": {
+      "region": [
+        1.9756644850189018,
+        0.39634740177628836,
+        1.976405185566056,
+        0.3970406437649357,
+        0,
+        40
+      ]
+    },
+    "refine": "ADD",
+    "geometricError": 500,
+    "children": [
+      {
+        "boundingVolume": {
+          "region": [
+            1.9756725361107221,
+            0.3964090797649357,
+            1.976352485259546,
+            0.3970406437649357,
+            0,
+            40
+          ]
+        },
+        "geometricError": 400,
+        "refine": "ADD",
+        "content": {
+          "url": "Instanced001/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "region": [
+            1.9756644850189018,
+            0.39640470143500484,
+            1.9763444341677256,
+            0.3970362654350048,
+            0,
+            40
+          ]
+        },
+        "geometricError": 400,
+        "refine": "ADD",
+        "content": {
+          "url": "Instanced004_NEW_001/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "region": [
+            1.9757252493472834,
+            0.39634740177628836,
+            1.976405185566056,
+            0.39697896577628833,
+            0,
+            40
+          ]
+        },
+        "geometricError": 400,
+        "refine": "ADD",
+        "content": {
+          "url": "Instanced003-1/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "region": [
+            1.9756741903310904,
+            0.39639967854951386,
+            1.9763541394799142,
+            0.39703124254951383,
+            0,
+            40
+          ]
+        },
+        "geometricError": 400,
+        "refine": "ADD",
+        "content": {
+          "url": "Instanced003/tileset.json"
+        }
+      },
+      {
+        "boundingVolume": {
+          "region": [
+            1.9756850413816296,
+            0.3964088882212721,
+            1.9763649905304534,
+            0.3970404522212721,
+            0,
+            40
+          ]
+        },
+        "geometricError": 400,
+        "refine": "ADD",
+        "content": {
+          "url": "Instanced002/tileset.json"
+        }
+      }
+    ]
+  }
+}

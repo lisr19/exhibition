@@ -1,0 +1,425 @@
+*{margin: 0;padding: 0;}
+.ent_admin_body{
+    width:23.04rem;
+    height:12.96rem;
+    margin: 0 auto;
+    position: relative;
+    .title{
+        position: absolute;
+        top: .42rem;
+        left: 9.96rem;
+        width: 3.12rem;
+        height:.73rem;
+        font-size:.52rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        color:rgba(#B7BDC9);
+        line-height:.73rem;
+    }
+    >.L_chart_box {//左边图表
+        width: 4.02rem;
+        height: 10.2rem;
+        position: absolute;
+        top: 1.63rem;
+        left: 2.37rem;
+        >li {
+            width:4.02rem;
+            height:2.46rem;
+	        background:rgba(167,186,255,0.3);
+	        box-shadow:0px 0px 5px 2px rgba(0,0,0,0.03);
+            border-radius:.05rem;
+            margin-bottom: .12rem;
+            list-style: none;
+            position: relative;
+            >div {
+                width: 3.47rem;
+                height: 1.18rem;
+                position: absolute;
+                top: 1.1rem;
+                left: .17rem;
+            }
+            >h2 {
+                position: absolute;
+                left: .18rem;
+                top: .33rem;
+                height:.28rem;
+                font-size:.2rem;
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                color:#fff;
+                line-height:.24rem;
+            }
+            >h1 {
+                position: absolute;
+                top: .22rem;
+                right: .25rem;
+                height:.5rem;
+                font-size:.36rem;
+                font-family:Lato-Regular;
+                font-weight:400;
+                color:#fff;
+                line-height:.5rem;
+                >p {
+                    display: inline;
+                    font-size:.10rem;
+                    font-family:PingFangSC-Regular;
+                    font-weight:400;
+	                color:#ccc;
+                }
+            }
+            >p {
+                position: absolute;
+                top: .81rem;
+                height:.15rem;
+                font-size:.1rem;
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+	            color:#fff;
+                line-height:.15rem;
+            }
+            >i {
+                position: absolute;
+                top: .84rem;
+                width:.09rem;
+                height:.09rem;
+                border-radius:.02rem;
+            }
+            >p:nth-of-type(1) {
+                left: 2.69rem;
+            }
+            >p:nth-of-type(2) {
+                left: 3.39rem;
+            }
+            >i:nth-of-type(1) {
+                background:#2DE4FA;
+                left: 2.55rem;
+            }
+            >i:nth-of-type(2) {
+                background:rgba(134,150,243,1);
+                left: 3.24rem;
+            }
+        }
+    }
+    >.middle_chart_box {//中心图表
+        width: 8.53rem;
+        height: 10.21rem;
+	    background:rgba(167,186,255,0.3);
+	    box-shadow:0px 0px 5px 2px rgba(0,0,0,0.03);
+        border-radius:.06rem;
+        position: absolute;
+        top: 1.63rem;
+        left: 7.27rem;
+        overflow: hidden;
+        >h1{
+            position: absolute;
+            top: .44rem;
+            left: .37rem;
+            height:.29rem;
+            font-size:.21rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#ffffff;
+            line-height:.29rem;
+        }
+        >.ivu-select {
+            top: .44rem;
+            left: 6.81rem;
+        }
+        .Ment_show_windo{
+            height: 8.84rem;
+            width: 7.83rem;
+            position: absolute;
+            top: 1.37rem;
+            left: .36rem;
+            border-radius:.05rem;
+            overflow: hidden;
+            >ul{
+                width: 8.84rem;
+                height: 7.83rem;
+                transition: all 1s linear;
+                position: relative;
+                // transform:rotateY("0deg");
+                top: 0rem;
+                left: 0;
+                >li{
+                    width: 8.84rem;
+                    height: 4.22rem;
+                    list-style: none;
+                    margin-bottom: .58rem;
+                    position: relative;
+                    >h1 {
+                        position: absolute;
+                        top: .05rem;
+                        left: .51rem;
+                        height:.33rem;
+                        font-size:.24rem;
+                        font-family:PingFangSC-Regular;
+                        font-weight:400;
+                        color:rgba(#AFBDD1);
+                        line-height:.33rem;
+                    }
+                    >img {
+                        position: absolute;
+                        display: block;
+                        width:.42rem;
+                        height:.42rem;
+                        top:.0rem;
+                        left: 0rem;
+                        border-radius:.05rem;
+                    }
+                    .tapy_box {
+                        position: absolute;
+                        left: .0rem;
+                        height: .31rem;
+                        top: .69rem;
+                        >li{
+                            width:.86rem;
+                            height:.31rem;
+                           background:rgba(#295294);
+                            border-radius:.06rem;
+                            margin-right: .09rem;
+                            float: left;
+                            font-size:.12rem;
+                            font-family:PingFangSC-Regular;
+                            font-weight:400;
+                            color:rgba(135,150,176,1);
+                            line-height:.31rem;
+                            list-style: none;
+                        }
+                    }
+                    .value_box {
+                        width: 2.3rem;
+                        height: 1.73rem;
+                        position: absolute;
+                        top: 1.48rem;
+                        left: .0rem;
+                        >li {
+                            width: 2.3rem;
+                            height: .30rem;
+                            list-style: none;
+                            margin-bottom: .31rem;
+                            >img {
+                                width: .30rem;
+                                height: .30rem;
+                                display: block;
+                                float: left;
+                                margin-right: .11rem;
+                            }
+                            >p:nth-of-type(1) {
+                                float: left;
+                                width: .90rem;
+                                height: .24rem;
+                                font-size:.21rem;
+                                font-family:PingFangSC-Regular;
+                                font-weight:400;
+                                color:rgba(175,189,209,1);
+                                line-height:.29rem;
+                                text-align: left;
+                            }
+                            >p:nth-of-type(2) {
+                                float: left;
+                                height: .24rem;
+                                font-size:.21rem;
+                                font-family:PingFangSC-Regular;
+                                font-weight:400;
+                                color:rgba(175,189,209,1);
+                                line-height:.29rem;
+                                text-align: left;
+                            }
+                        }
+                    }
+                    >h2 {
+                        position: absolute;
+                        top: 1.49rem;
+                        left: 3.8rem;
+                        height:.24rem;
+                        font-size:.17rem;
+                        font-family:PingFangSC-Regular;
+                        font-weight:400;
+                        color:#fff;
+                        line-height:.24rem;
+                    }
+                    >h5 {
+                        position: absolute;
+                        top: 1.53rem;
+                        left: 6.6rem;
+                        width: 1.58rem;
+                        height: .22rem;
+                        font-size:.14rem;
+                        font-family:PingFangSC-Regular;
+                        font-weight:400;
+                        color:#fff;
+                        line-height:.22rem;
+                        >i {
+                            display: block;
+                            float: left;
+                            width: .13rem;
+                            height: .13rem;
+                            margin: 0 .07rem;
+                            margin-top: .05rem;
+                            border-radius:.02rem;
+                        }
+                        >i:nth-of-type(1) {
+                            background-color: #EFB486;
+                        }
+                        >p {
+                            display: block;
+                            float: left;
+                            height: .22rem;
+                        }
+                    }
+                    >div {
+                        width:6.82rem;
+                        height:.02rem;
+                        background: #55709D;
+                        position: absolute;
+                        bottom: 0rem;
+                        left: .52rem;
+                    }
+                }
+                >.middle_chart_1 {
+                    position: absolute;
+                    left: 3.7rem;
+                    width:4.34rem;
+                    height:3rem;
+                    z-index: 100;
+                }
+                >.middle_chart_1:nth-of-type(1) {
+                    top: 1.2rem;
+                }
+                >.middle_chart_1:nth-of-type(2) {
+                    top: 6.1rem;
+                }
+            }
+        }
+    }
+    >.R_top_chart_box{//右上图表
+        width:4.03rem;
+        height:2.46rem;
+	    background:rgba(167,186,255,0.3);
+	    box-shadow:0px 0px 5px 2px rgba(0,0,0,0.03);
+        border-radius:.05rem;
+        position: absolute;
+        top: 1.63rem;
+        left: 16.64rem;
+        >div {
+            position: absolute;
+            top: .82rem;
+            left: 2.46rem;
+        }
+        >h1 {
+            position: absolute;
+            top: .32rem;
+            left: .26rem;
+            height:.24rem;
+            font-size:.17rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#ffffff;
+            line-height:.26rem;
+        }
+        >.ent_type_window {
+            position: absolute;
+            top: .81rem;
+            left: .28rem;
+            height: 1.35rem;
+            width: 1.26rem;
+            overflow: hidden;
+            >ul {
+                width: 1.56rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: all 1s;
+                >li {
+                    list-style: none;
+                    width: 1.56rem;
+                    height: .24rem;
+                    margin-bottom: .10rem;
+                    >h2 {
+                        float: left;
+                        width:.84rem;
+                        height:.24rem;
+                        font-size:.17rem;
+                        font-family:PingFangSC-Regular;
+                        font-weight:400;
+                        color:rgba(175,189,209,1);
+                        line-height:.24rem;
+                        margin-right: .15rem;
+                        text-align: left;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    >h3 {
+                        float: left;
+                        height:.21rem;
+                        font-size:.17rem;
+                        font-family:Lato-Regular;
+                        font-weight:400;
+                        color:rgba(175,189,209,1);
+                        line-height:.21rem;
+                    }
+                }
+            }
+        }
+
+    }
+    >.R_bottom_list{//右下列表
+        position: absolute;
+        top: 4.21rem;
+        left: 16.64rem;
+        width:4.04rem;
+        height:7.63rem;
+	    background:rgba(167,186,255,0.3);
+	    box-shadow:0px 0px 5px 2px rgba(0,0,0,0.03);
+        border-radius:.06rem;
+        overflow: hidden;
+        >h1 {
+            position: absolute;
+            top: .40rem;
+            left: .34rem;
+            height:.29rem;
+            font-size:.21rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#fff;
+            line-height:.29rem;
+        }
+        >.ivu-select{
+            top: .40rem;
+            left: 2.35rem;
+            width: 1.34rem;
+        }
+        >ul {
+            width: 3.18rem;
+            height: 6.92rem;
+            position: absolute;
+            // transform : skewX(15deg);
+            transform-origin: top left;
+            top: 1rem;
+            left: .35rem;
+            overflow: hidden;
+            // transition: all 2s cubic-bezier(.33,.94,.64,1.34);
+            >.ent_list{
+                width: 3.18rem;
+                height: .22rem;
+                list-style: none;
+                margin-bottom: .16rem;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size:.16rem;
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                color:rgba(175,189,209,1);
+                line-height:.22rem;
+                text-align: left;
+                // transition: all .2s;
+            }
+        }
+    }
+    .ivu-select{
+        position: absolute;
+    }
+}

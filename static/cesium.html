@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cesium</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <script src="Cesium/Cesium.js"></script>
+  <script src="Cesium/vue.js"></script>
+  <script src="Cesium/jquery-1.7.1.min.js"></script>
+  <style>
+    @import url(Cesium/Widgets/widgets.css);
+
+    html, body, #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .view-body {
+      position: relative;
+      width: inherit;
+      height: inherit;
+    }
+
+    .view-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6%;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .view-btn-item {
+      width: 10%;
+      height: 100%;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .view-select{
+      width: 10%;
+      height: 100%;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+    /*.cesium-widget-credits {*/
+    /*display: none !important;*/
+    /*visibility: hide !important;*/
+    /*}*/
+    .cesium-viewer-toolbar {
+      margin-top: 5%;
+      margin-right: 2%;
+    }
+
+    .list{
+      position: absolute;
+      width: 45%;
+      height: 60%;
+      left: 2%;
+      top: 10%;
+      background-color: rgba(43,54,72,0.6);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .list-title{
+      font-size:18px;
+      font-weight:400;
+      color:rgba(255,255,255,255);
+      line-height:24px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .list-header{
+      width: 100%;
+      text-align: left;
+    }
+    .list-font1{
+      font-size:18px;
+      font-weight:400;
+      color:rgba(255,255,255,255);
+      line-height:24px;
+      display: inline-block;
+      width: 23%;
+    }
+    .list-font2{
+      font-size:12px;
+      font-weight:600;
+      color:rgba(255,255,255,255);
+      line-height:21px;
+      display: inline-block;
+      margin-top: 7px;
+      text-align: center;
+      width: 18%;
+    }
+    .table{
+      width: 100%;
+      margin-top: 3%;
+    }
+    .item{
+      margin-top: 2%;
+      width: inherit;
+      font-size:13px;
+      font-weight:600;
+      color:rgba(175,189,209,1);
+      line-height:21px;
+    }
+    .item-name{
+      display: inline-block;
+      width: 23%;
+    }
+    .item-other{
+      display: inline-block;
+      width: 18%;
+      text-align: center;
+    }
+
+    #table1 {
+      transition:margin 2s;
+    }
+    .status{
+      position: absolute;
+      width: 30%;
+      height: 10%;
+      left: 2%;
+      top: 7%;
+      background-color: rgba(43,54,72,0.6);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .status-title{
+      font-size:18px;
+      font-weight:400;
+      color:rgba(255,255,255,255);
+      line-height:24px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .status-list {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .status-color{
+      background-color: #00a6ed;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .status-font{
+      font-size:16px;
+      font-weight:400;
+      color:rgba(255,255,255,255);
+      line-height:24px;
+      margin-left: 10px;
+      display: inline-block;
+    }
+    #status {
+      transition:margin 2s;
+    }
+    .classify{
+      position: absolute;
+      width: 38%;
+      left: 2%;
+      top: 7%;
+      background-color: rgba(43,54,72,0.6);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .classify-title{
+      font-size:18px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      line-height:24px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .classify-radio{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size:14px;
+      font-weight:600;
+      color:rgba(175,189,209,1);
+      line-height:21px;
+      margin-bottom: 20px;
+    }
+    .classify-btn{
+      width: 20%;
+      padding: 10px;
+      text-align: center;
+      background-color: rgba(43,54,72,0.8);
+      font-size:16px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      line-height:24px;
+      border-radius: 4px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div class="view-body" id="main">
+  <!--地图-->
+  <div id="cesiumContainer"></div>
+  <!--功能键-->
+  <div class="view-btn">
+    <div class="view-btn-item" onclick="viewChange(0)" :style="modelStatus === 0?'backgroundColor:rgba(43,54,72,0.5)':''">生产要素</div>
+    <div class="view-btn-item" onclick="viewChange(66)" :style="modelStatus === 1?'backgroundColor:rgba(43,54,72,0.5)':''">企业分类</div>
+    <div class="view-btn-item" onclick="viewChange(99)" :style="modelStatus === 2?'backgroundColor:rgba(43,54,72,0.5)':''">工作状态</div>
+
+  </div>
+  <!--列表展示-->
+  <div class="list" id="table1" style="margin-left: -90%">
+    <div class="list-title">{{year}}年{{month}}月 生产要素</div>
+    <div class="list-header">
+      <div class="list-font1">企业名称</div>
+      <div class="list-font2">用水(t)</div>
+      <div class="list-font2">用电(kw)</div>
+      <div class="list-font2">废水排放(t)</div>
+      <div class="list-font2">污水排放(t)</div>
+    </div>
+    <div class="table">
+      <div class="item" v-for="(item,index) in entData">
+        <div class="item-name">{{item.name}}</div>
+        <div class="item-other" :style="item.water>1000?'color:red':''">{{item.water}}</div>
+        <div class="item-other" :style="item.ele>1000?'color:red':''">{{item.ele}}</div>
+        <div class="item-other" :style="item.rwater>1000?'color:red':''">{{item.rwater}}</div>
+        <div class="item-other" :style="item.dwater>1000?'color:red':''">{{item.dwater}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!--状态提醒-->
+  <div class="status" id="status" style="margin-left: -50%">
+    <div class="status-title">{{year}}年{{month}}月 工作状态</div>
+    <div class="status-list">
+      <div>
+        <div class="status-color"></div>
+        <div class="status-font">待工</div>
+      </div>
+      <div>
+        <div class="status-color" style="background-color: green"></div>
+        <div class="status-font">部分开工</div>
+      </div>
+      <div>
+        <div class="status-color" style="background-color: red"></div>
+        <div class="status-font">满负荷生产</div>
+      </div>
+    </div>
+  </div>
+
+  <!--分类-->
+  <div class="classify" id="classify" style="margin-left: -50%">
+    <div class="classify-title">企业分类</div>
+    <div class="classify-radio">
+      <input type="radio" name="radio1" value="1">国有企业
+      <input type="radio" name="radio1" value="2">私营企业
+      <input type="radio" name="radio1" value="3">外资企业
+    </div>
+    <div class="classify-title">主营方向</div>
+    <div class="classify-radio">
+      <input type="radio" name="radio2" value="1">能源领域
+      <input type="radio" name="radio2" value="2">电子领域
+      <input type="radio" name="radio2" value="3">高新材料
+      <input type="radio" name="radio2" value="4">电气领域
+    </div>
+    <div class="classify-btn" onclick="entClassify()">确定</div>
+  </div>
+</div>
+<script>
+  // var baseUrl = 'http://192.168.199.122:8080/';
+  // var baseUrl = 'http://192.168.0.122:8080/';
+  var baseUrl = 'http://llz.halohealth.cn:8080/';
+  // var baseUrl2 = 'http://sdcmi.halohealth.cn/resource/3d/2/';//模型资源路径
+  var year = new Date().getFullYear()
+  var month = new Date().getMonth()-1
+  // console.log(window.frames.location.hash.split('=')[1])
+  var gisType = window.frames.location.hash.split('=')[1]
+  var vm = new Vue({
+    el: "#main",
+    data: {
+      entData:[],
+      listShow:false,
+      year:year,
+      month:month,
+      modelStatus : 0,//模型状态，0为生产要素，1为企业分类，2为工作状态
+      gisType:'',
+      API:{
+        listByGisId:'/productionFactorsData/listByGisId',
+
+        // 获取污水处理点
+        getWSPoint:'/sewageTreatmentPoint/list',
+        // 获取污水处理点数据
+        getWSPointData:'/sewageTreatmentPoint/list'
+      }
+    },
+    created(){
+      // this.findEntData()
+    },
+    mounted(){
+      // if(gisType != 'pro'){
+      //   document.getElementsByClassName('view-btn')[0].style = 'display: none;'
+      // }
+      this.findEntData('getWSPoint')
+    },
+    methods:{
+      // 获取
+      async findEntData(API,data){
+        // let ip = 'http://192.168.0.123:8090/api/0.1'//内网
+        let ip = 'http://llz.halohealth.cn:8090/api/0.1' 
+        // let ip = 'http://192.168.1.122:8090/api/0.1'
+        let self = this
+        $.ajax({
+          url: ip+this.API[API],    //请求的url地址
+          dataType: "json",   //返回格式为json
+          async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+          headers:{"authorization" : localStorage.exhibition_token,"Content-Type":"application/json;charset=UTF-8"},
+          data: data,    //参数值
+          type: "GET",   //请求方式
+          success: function(res) {
+            self.getResDispose(API,res)
+          },
+          error: function() {
+            //请求出错处理
+          }
+        });
+      },
+      // 处理
+      getResDispose(API,res){
+        let funName = API+'Fun'
+        this[funName](res)
+      },
+      // 污水处理点
+      getWSPointFun(res){
+        if(res.code === 200){
+          console.log(res)
+        }
+        
+      },
+
+      listByGisIdFun(res){
+        let array = []
+        res.data.list.forEach(v=>{
+          let obj = {
+            entName:v.entName,
+          }
+          if(v.entName.length > 7){
+            obj.name = v.entName.slice(0,7)+'...'
+          }else{
+            obj.name = v.entName
+          }
+          let a = v.data.split(';')
+          a.forEach(k=>{
+            let b = k.split('-')
+            //1为用水；2为用电；3为废水；4为污水
+            if(b[0]==='1'){
+              obj.water=b[1]
+            }
+            if(b[0]==='2'){
+              obj.ele=b[1]
+            }
+            if(b[0]==='3'){
+              obj.rwater=b[1]
+            }
+            if(b[0]==='4'){
+              obj.dwater=b[1]
+            }
+          })
+          array.push(obj)
+        })
+        vm.entData = array
+        console.log(vm.entData)
+      },
+
+
+
+    }
+  });
+  var viewer = new Cesium.Viewer('cesiumContainer', {
+    animation: false,       //是否显示动画控件
+    homeButton: false,       //是否显示home键
+    geocoder: false,         //是否显示地名查找控件        如果设置为true，则无法查询
+    baseLayerPicker: true, //是否显示图层选择控件
+    timeline: false,        //是否显示时间线控件
+    fullscreenButton: false, //是否全屏显示
+    scene3DOnly: true,     //如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
+    infoBox: true,         //是否显示点击要素之后显示的信息
+    sceneModePicker: true,  //是否显示投影方式控件  三维/二维
+    navigationInstructionsInitiallyVisible: false,
+    navigationHelpButton: true,     //是否显示帮助信息控件
+    selectionIndicator: false//是否显示指示器组件
+  });
+  viewer._cesiumWidget._creditContainer.style.display = "none";
+  var canvas = viewer.canvas;
+  var camera = viewer.camera;
+  var handler = new Cesium.ScreenSpaceEventHandler(canvas);
+  var scene = viewer.scene;
+
+  var provider = new Cesium.WebMapServiceImageryProvider({
+    url: baseUrl + 'geoserver/ShunDeMap/wms',
+    layers: 'ShunDeMap:SD_18',
+    parameters: {
+      service: 'WMS',
+      format: 'image/png',
+      transparent: true,
+      tiled: true,
+    }
+  });
+  //设置ProviderViewModel：
+  var myMapModel = new Cesium.ProviderViewModel({
+    name: '顺德地图',
+    iconUrl: Cesium.buildModuleUrl('./Widgets/Images/ImageryProviders/esriWorldImagery.png'),
+    tooltip: '顺德地图服务',
+    creationFunction: function () {
+      return provider;
+    }
+  });
+  var providerViewModels = [];
+  providerViewModels.push(myMapModel);
+  viewer.baseLayerPicker.viewModel.imageryProviderViewModels = providerViewModels;
+  viewer.baseLayerPicker.viewModel.selectedImagery = viewer.baseLayerPicker.viewModel.imageryProviderViewModels[0];
+  //限制视距
+  // scene.screenSpaceCameraController.minimumZoomDistance = 200;
+  // scene.screenSpaceCameraController.maximumZoomDistance = 1200;
+  modelUp()
+  //模型创建
+  function modelUp(){
+    viewer.entities.removeAll();
+    createModel(0,'1','/static/sdcmi_show/gltf/001.gltf', 113.21680, 22.73105, 0, -90, 14);
+    createModel(0,'2','/static/sdcmi_show/gltf/002.gltf', 113.21845, 22.73100, 0, -90, 14);
+    createModel(0,'3','/static/sdcmi_show/gltf/003.gltf', 113.21700, 22.72990, 0, -90, 14);
+    createModel(0,'4','/static/sdcmi_show/gltf/004.gltf', 113.21760, 22.73040, 0, 90, 14);
+  }
+ //状态模型创建
+  function statusModelUp(){
+    viewer.entities.removeAll();
+    createModel(2,'1','/static/sdcmi_show/gltf/001.gltf', 113.21680, 22.73105, 0, -90, 14);
+    createModel(1,'2','/static/sdcmi_show/gltf/002.gltf', 113.21845, 22.73100, 0, -90, 14);
+    createModel(2,'3','/static/sdcmi_show/gltf/003.gltf', 113.21700, 22.72990, 0, -90, 14);
+    createModel(3,'4','/static/sdcmi_show/gltf/004.gltf', 113.21760, 22.73040, 0, 90, 14);
+  }
+
+  //分类模型创建
+  function classifyModelUp(data){
+    viewer.entities.removeAll();
+    createModel(data[0],'1','/static/sdcmi_show/gltf/001.gltf', 113.21680, 22.73105, 0, -90, 14);
+    createModel(data[1],'2','/static/sdcmi_show/gltf/002.gltf', 113.21845, 22.73100, 0, -90, 14);
+    createModel(data[2],'3','/static/sdcmi_show/gltf/003.gltf', 113.21700, 22.72990, 0, -90, 14);
+    createModel(data[3],'4','/static/sdcmi_show/gltf/004.gltf', 113.21760, 22.73040, 0, 90, 14);
+  }
+
+
+  //得到当前三维场景的椭球体
+  var ellipsoid = scene.globe.ellipsoid;
+  var longitudeString = null;
+  var latitudeString = null;
+  var cartesian = null;
+  //鼠标事件
+  var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+  // handler.setInputAction(function(click) {
+  //   // 处理鼠标按下事件
+  //   // 获取鼠标当前位置
+  //   // console.log('1111');
+  //   //通过指定的椭球或者地图对应的坐标系，将鼠标的二维坐标转换为对应椭球体三维坐标
+  //   cartesian = camera.pickEllipsoid(click.endPosition, ellipsoid);
+  //   if (cartesian) {
+  //     //将笛卡尔坐标转换为地理坐标
+  //     var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+  //     //将弧度转为度的十进制度表示
+  //     longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+  //     latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+  //     console.log('longitude:'+longitudeString+', latitude:'+latitudeString)
+  //   }
+  //   // var pick = viewer.scene.pick(click.position);
+  //   // //选中某模型   pick选中的对象
+  //   // if(pick && pick.id){
+  //   //   console.log(pick)
+  //   // }
+  //
+  // }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+  //鼠标点击事件
+  var mouseClickGisId
+  handler.setInputAction(function(click) {
+    // 处理鼠标按下事件
+    // 获取鼠标当前位置
+    // console.log('1111');
+    var pick = viewer.scene.pick(click.position);
+    //选中某模型   pick选中的对象
+    if(pick && pick.id && (vm.modelStatus === 0)){
+      var table1 = document.getElementById('table1')
+      var index = pick.id._name
+      if (index == 1) {
+        table1.style.marginLeft = '0'
+        //设置园区建筑1视窗
+        var buildingCameraView = {
+          destination: Cesium.Cartesian3.fromDegrees(113.2168274154, 22.7323982818, 50.0),
+          duration: 1.0,
+          maximumHeight: 2000,
+          pitchAdjustHeight: 2000,
+          endTransform: Cesium.Matrix4.IDENTITY,
+          orientation: {
+            heading: Cesium.Math.toRadians(150.0),
+            pitch: Cesium.Math.toRadians(-10.0),
+            roll: 0.0
+          }
+        };
+        if(mouseClickGisId != index){
+          scene.camera.flyTo(buildingCameraView);
+        }
+        vm.findEntData('listByGisId',{gisId:'A1',year:year,month:month})
+      }else if (index == 2) {
+        table1.style.marginLeft = '0'
+        //设置园区建筑2视窗
+        var buildingCameraView = {
+          destination: Cesium.Cartesian3.fromDegrees(113.220009154, 22.7319082818, 50.0),
+          duration: 1.0,
+          maximumHeight: 2000,
+          pitchAdjustHeight: 2000,
+          endTransform: Cesium.Matrix4.IDENTITY,
+          orientation: {
+            heading: Cesium.Math.toRadians(220.0),
+            pitch: Cesium.Math.toRadians(-6.0),
+            roll: 0.0
+          }
+        };
+        if(mouseClickGisId != index){
+          scene.camera.flyTo(buildingCameraView);
+        }
+        vm.findEntData('listByGisId',{gisId:'A2',year:year,month:month})
+      }else if (index == 3) {
+        table1.style.marginLeft = '0'
+        //设置园区建筑3视窗
+        var buildingCameraView = {
+          destination: Cesium.Cartesian3.fromDegrees(113.21797295985236, 22.727793976685128, 90.0),
+          duration: 1.0,
+          maximumHeight: 2000,
+          pitchAdjustHeight: 2000,
+          endTransform: Cesium.Matrix4.IDENTITY,
+          orientation: {
+            heading: Cesium.Math.toRadians(-30.0),
+            pitch: Cesium.Math.toRadians(-15.0),
+            roll: 0.0
+          }
+        };
+        if(mouseClickGisId != index){
+          scene.camera.flyTo(buildingCameraView);
+        }
+        vm.findEntData('listByGisId',{gisId:'A3',year:year,month:month})
+      }else if (index == 4) {
+        table1.style.marginLeft = '0'
+        //设置园区建筑4视窗
+        var buildingCameraView = {
+          destination: Cesium.Cartesian3.fromDegrees(113.21496993421938, 22.730099408252652, 80.0),
+          duration: 1.0,
+          maximumHeight: 2000,
+          pitchAdjustHeight: 2000,
+          endTransform: Cesium.Matrix4.IDENTITY,
+          orientation: {
+            heading: Cesium.Math.toRadians(65.0),
+            pitch: Cesium.Math.toRadians(-10.0),
+            roll: 0.0
+          }
+        };
+        if(mouseClickGisId != index){
+          scene.camera.flyTo(buildingCameraView);
+        }
+        vm.findEntData('listByGisId',{gisId:'A4',year:year,month:month})
+      }
+    }
+    mouseClickGisId = index
+  }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+  //设置home键视窗
+  var homeCameraView = {
+    destination: Cesium.Cartesian3.fromDegrees(113.21527074279392, 22.72684814286231, 700),
+    duration: 1.0,
+    maximumHeight: 2000,
+    pitchAdjustHeight: 2000,
+    endTransform: Cesium.Matrix4.IDENTITY,
+    orientation: {
+      heading: Cesium.Math.toRadians(60.0),
+      pitch: Cesium.Math.toRadians(-60.0),
+      roll: 0.0
+    }
+  };
+  scene.camera.flyTo(homeCameraView);
+
+  //创建原始模型
+  function createModel(type,name,url, lng, lat, height, axesX, size) {
+    // this.viewer.entities.removeAll();
+    var position = Cesium.Cartesian3.fromDegrees(lng, lat, height);
+    var heading = Cesium.Math.toRadians(axesX);
+    var pitch = 0;
+    var roll = 0;
+    var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+    var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+    var color = null
+    if(type === 1){
+      color = Cesium.Color.fromAlpha(Cesium.Color.BLUE, parseFloat(0.5))
+    }else if(type === 2){
+      color = Cesium.Color.fromAlpha(Cesium.Color.GREEN, parseFloat(0.5))
+    }else if(type === 3){
+      color = Cesium.Color.fromAlpha(Cesium.Color.RED, parseFloat(0.5))
+    }
+
+    if(color != null){
+      viewer.trackedEntity = viewer.entities.add({
+        name: name,
+        position: position,
+        orientation: orientation,
+        model: {
+          uri: url,
+          scale: size,
+          // minimumPixelSize : 20,
+          maximumScale: 100,
+          //模型颜色，透明度
+          color : color,
+          //轮廓线
+          silhouetteColor : Cesium.Color.fromAlpha(Cesium.Color.GREEN, parseFloat(0.5)),
+          //模型样式['Highlight', 'Replace', 'Mix']
+          colorBlendMode : Cesium.ColorBlendMode.MIX,
+          //colorBlendAmount需要选择mix后将colorBlendAmountEnabled设置为true才能使用
+          colorBlendAmountEnabled : true,
+          colorBlendAmount : parseFloat(0.8)
+        }
+      });
+    }else{
+      viewer.trackedEntity = viewer.entities.add({
+        name: name,
+        position: position,
+        orientation: orientation,
+
+        model: {
+          uri: url,
+          scale: size,
+          // minimumPixelSize : 20,
+          maximumScale: 100,
+        }
+      });
+    }
+  }
+
+  //园区视窗
+  function viewChange(index) {
+    vm.entData = []
+    var table1 = document.getElementById('table1')
+    var status = document.getElementById('status')
+    var classify = document.getElementById('classify')
+    if (index == 99) {
+      vm.modelStatus = 2
+      statusModelUp()
+      classify.style.marginLeft = '-50%'
+      table1.style.marginLeft = '-50%'
+      status.style.marginLeft = '0'
+      var buildingCameraView = {
+        destination: Cesium.Cartesian3.fromDegrees(113.21447391281708, 22.728281994486682, 500.0),
+        duration: 1.0,
+        maximumHeight: 2000,
+        pitchAdjustHeight: 2000,
+        endTransform: Cesium.Matrix4.IDENTITY,
+        orientation: {
+          heading: Cesium.Math.toRadians(80.0),
+          pitch: Cesium.Math.toRadians(-45.0),
+          roll: 0.0
+        }
+      };
+      scene.camera.flyTo(buildingCameraView);
+    } else if(index == 66){
+      vm.modelStatus = 1
+      var data = [0,0,0,0]
+      classifyModelUp(data)
+      classify.style.marginLeft = '0'
+      table1.style.marginLeft = '-50%'
+      status.style.marginLeft = '-50%'
+      var buildingCameraView = {
+        destination: Cesium.Cartesian3.fromDegrees(113.21447215, 22.72828024, 500.0),
+        duration: 1.0,
+        maximumHeight: 2000,
+        pitchAdjustHeight: 2000,
+        endTransform: Cesium.Matrix4.IDENTITY,
+        orientation: {
+          heading: Cesium.Math.toRadians(80.0),
+          pitch: Cesium.Math.toRadians(-50.0),
+          roll: 0.0
+        }
+      };
+      scene.camera.flyTo(buildingCameraView);
+    }else if (index == 0) {
+      vm.modelStatus = 0
+      modelUp()
+      classify.style.marginLeft = '-50%'
+      table1.style.marginLeft = '-50%'
+      status.style.marginLeft = '-50%'
+      scene.camera.flyTo(homeCameraView);
+    }
+  }
+
+  //企业分类
+  function entClassify(){
+    var radio1 = document.getElementsByName('radio1')
+    var radio2 = document.getElementsByName('radio2')
+    var value1 = ''
+    var value2 = ''
+    for(var i=0;i<radio1.length;i++){
+      if(radio1[i].checked){
+        value1 = i
+        break;
+      }
+    }
+    for(var i=0;i<radio2.length;i++){
+      if(radio2[i].checked){
+        value2 = i
+        break;
+      }
+    }
+    var data = []
+    if(value1 == 0){
+      data = [0,1,1,0]
+    }else{
+      data = [0,0,0,1]
+    }
+    classifyModelUp(data)
+    var buildingCameraView = {
+      destination: Cesium.Cartesian3.fromDegrees(113.21447215, 22.72828024, 500.0),
+      duration: 1.0,
+      maximumHeight: 2000,
+      pitchAdjustHeight: 2000,
+      endTransform: Cesium.Matrix4.IDENTITY,
+      orientation: {
+        heading: Cesium.Math.toRadians(80.0),
+        pitch: Cesium.Math.toRadians(-50.0),
+        roll: 0.0
+      }
+    };
+    scene.camera.flyTo(buildingCameraView);
+  }
+</script>
+</body>
+</html>

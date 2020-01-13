@@ -1,0 +1,58 @@
+.home {
+  width: 100%;
+  height: 100%;
+  padding-top: 42px;
+  .home-title {
+    font-size: 50px;
+    font-weight: 400;
+    color:rgba(247,247,247,1);
+    line-height: 65px;
+    margin-top: 20px;
+  }
+  .home-btn{
+    width: 360px;
+    height: 300px;
+    display: inline-block;
+    margin-top: 30px;
+    position: relative;
+    .btn-img{
+      position: absolute;
+      width: 229px;
+      height: 224px;
+      left: 50%;
+      top:50%;
+      margin-left: -114.5px;
+      margin-top: -135px;
+      z-index: 333;
+      transition: margin-top 0.8s;
+      -moz-transition: margin-top 0.8s; /* Firefox 4 */
+      -webkit-transition: margin-top 0.8s; /* Safari 和 Chrome */
+      -o-transition: margin-top 0.8s; /* Opera */
+      &:hover{
+        //.btn-img{
+          margin-top: -120px;
+        //}
+        + .btn-shadow{
+          width: 360px;
+          margin-left: -180px;
+          opacity: 1;
+        }
+      }
+    }
+    .btn-shadow{
+      position: absolute;
+      width: 330px;
+      height: 140px;
+      opacity: 0.4;
+      left: 50%;
+      margin-left: -165px;
+      bottom:0;
+      z-index: 222;
+      transition: width 1.5s,margin-left 1.5s,opacity 0.8s;
+      -moz-transition: width 1.5s,margin-left 1.5s,opacity 0.8s; /* Firefox 4 */
+      -webkit-transition: width 1.5s,margin-left 2s,opacity 0.8s; /* Safari 和 Chrome */
+      -o-transition: width 1.5s,margin-left 1.5s,opacity 0.8s; /* Opera */
+    }
+
+  }
+}
